@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CompanyRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="156" />
+          <Property Name="Address" Type="nvarchar" MaxLength="256" />
+          <Property Name="Experience" Type="decimal" Precision="2" Scale="1" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="56" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeDetails">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="56" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="56" />
+          <Property Name="Email" Type="nvarchar" MaxLength="156" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="12" />
+          <Property Name="Address" Type="nvarchar" MaxLength="256" />
+          <Property Name="Country" Type="nvarchar" MaxLength="56" />
+          <Property Name="State" Type="nvarchar" MaxLength="56" />
+          <Property Name="City" Type="nvarchar" MaxLength="56" />
+          <Property Name="TotalExperience" Type="decimal" Precision="2" Scale="1" />
+        </EntityType>
+        <Association Name="FK__CompanyRe__EmpId__3C69FB99">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="CompanyRecord" Type="Self.CompanyRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="CompanyRecord">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_SearchEmpDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="firstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="lastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="country" Type="nvarchar" Mode="In" />
+          <Parameter Name="state" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="EmployeeDBModelStoreContainer">
+          <EntitySet Name="CompanyRecord" EntityType="Self.CompanyRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CompanyRe__EmpId__3C69FB99" Association="Self.FK__CompanyRe__EmpId__3C69FB99">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="CompanyRecord" EntitySet="CompanyRecord" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CompanyRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="156" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Experience" Type="Decimal" Precision="2" Scale="1" />
+          <Property Name="Designation" Type="String" MaxLength="56" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="Self.FK__CompanyRe__EmpId__3C69FB99" FromRole="CompanyRecord" ToRole="EmployeeDetails" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="56" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="156" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Name="TotalExperience" Type="Decimal" Precision="2" Scale="1" />
+          <NavigationProperty Name="CompanyRecords" Relationship="Self.FK__CompanyRe__EmpId__3C69FB99" FromRole="EmployeeDetails" ToRole="CompanyRecord" />
+        </EntityType>
+        <Association Name="FK__CompanyRe__EmpId__3C69FB99">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="0..1" />
+          <End Role="CompanyRecord" Type="Self.CompanyRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="CompanyRecord">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CompanyRecords" EntityType="Self.CompanyRecord" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
+          <AssociationSet Name="FK__CompanyRe__EmpId__3C69FB99" Association="Self.FK__CompanyRe__EmpId__3C69FB99">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="CompanyRecord" EntitySet="CompanyRecords" />
+          </AssociationSet>
+          <FunctionImport Name="SP_SearchEmpDetails" ReturnType="Collection(EmployeeDBModel.SP_SearchEmpDetails_Result)">
+            <Parameter Name="firstName" Mode="In" Type="String" />
+            <Parameter Name="lastName" Mode="In" Type="String" />
+            <Parameter Name="country" Mode="In" Type="String" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_SearchEmpDetails_Result">
+          <Property Type="Int32" Name="EmpID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="56" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="56" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="156" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="56" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="56" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="56" />
+          <Property Type="Decimal" Name="TotalExperience" Nullable="true" Precision="2" Scale="1" />
+          <Property Type="Int32" Name="RecordID" Nullable="false" />
+          <Property Type="Int32" Name="EmpId1" Nullable="true" />
+          <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="156" />
+          <Property Type="String" Name="Address1" Nullable="true" MaxLength="256" />
+          <Property Type="Decimal" Name="Experience" Nullable="true" Precision="2" Scale="1" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="56" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeDBModelStoreContainer" CdmEntityContainer="EmployeeDBEntities">
+          <EntitySetMapping Name="CompanyRecords">
+            <EntityTypeMapping TypeName="EmployeeDBModel.CompanyRecord">
+              <MappingFragment StoreEntitySet="CompanyRecord">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDetails">
+            <EntityTypeMapping TypeName="EmployeeDBModel.EmployeeDetail">
+              <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="TotalExperience" ColumnName="TotalExperience" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_SearchEmpDetails" FunctionName="EmployeeDBModel.Store.SP_SearchEmpDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDBModel.SP_SearchEmpDetails_Result">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="TotalExperience" ColumnName="TotalExperience" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="EmpId1" ColumnName="EmpId1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
